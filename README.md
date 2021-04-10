@@ -1,4 +1,4 @@
-# soulvenote
+# solvenote
 
 A calculator with a notepad like experience to help you do calculations more realistically.
 
