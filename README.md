@@ -1,4 +1,6 @@
-# soulveit
+# soulvenote
+
+A calculator with a notepad like experience to help you do calculations more realistically.
 
 ## Project setup
 ```
