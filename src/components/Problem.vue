@@ -6,8 +6,7 @@
     v-model="ScreenValue"
     :highlightEnabled="true"
     spellcheck="false"
-    @keyup="detect"
-    @keydown="handleKeyboard"
+    @input="detect"
     class="editor text-left px-3 pt-6 text-h5"
     />
   </v-card>
@@ -15,20 +14,13 @@
 
 <script>
 import HighlightableInput from "vue-highlightable-input"
+import {styles} from '../utils/textStyles';
+
 export default {
   name: "Problem",
   data() {
     return {
-      highlight: [{
-        text: /(\d+)/g,
-        style:"color:blue;"
-      },{
-        text: /#[a-z]+/iygm,
-        style: 'font-weight:bold;'
-      },{
-        text: /\s[a-z]+/iygm,
-        style: 'font-weight:bold;'
-      }],
+      highlight: styles,
       timer:''
     }
   },

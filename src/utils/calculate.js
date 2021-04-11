@@ -35,8 +35,7 @@ export const getDivisionExpression = value => {
   let stringValue = split(value,"/");
   let numbers = stringValue.map(str => {
       if(str[0]=='(') {
-        if(str[1] && str[1].match(/[-+]/gm)) {
-          console.log('tes');
+        if(str[1] && str[1].match(/[-+]/gm)&&!isNaN(parseInt(str[0]))) {
           str=str.split('');
           str.splice(1,0,'0');
           str = str.join('');
@@ -44,7 +43,12 @@ export const getDivisionExpression = value => {
         const expr = str.substr(1,str.length-1);
         return getAdditionExpression(expr);
       }
-      return parseInt(str);
+      if(str.match(/\./g)) {
+        str = parseFloat(str);
+        console.log('string',str);
+      }
+      else str=parseInt(str)
+      return str;
   });
   let initial=numbers[0];
   let result = numbers.slice(1).reduce((acc,current) => acc/current,initial);

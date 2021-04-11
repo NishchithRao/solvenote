@@ -15,7 +15,7 @@
           flat
           class="rounded-0 text-h5 grey lighten-3  px-3 pt-6 text-left"
         >
-          <span v-if="Number(getValues.value)">{{ getValues.value }}</span>
+          <span v-if="!(getValues.expression[0]==='#')">{{ getValues.value }}</span>
           <span v-else class="grey lighten-3  px-3 pt-2"></span>
         </v-card></v-col
       >
