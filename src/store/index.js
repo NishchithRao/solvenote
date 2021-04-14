@@ -30,7 +30,7 @@ export default new Vuex.Store({
     },
     addPrevious(state,value) {
       let currentExpresssion = {
-        expression: state.screenValue,
+        expression: state.screenValue || state.problem,
         value: state.total
       }
       if(!value)
@@ -69,9 +69,12 @@ export default new Vuex.Store({
       commit('solve',solveExpression);
     },
     addPrevious({commit},value) {
+      console.log(value.match(/total/));
       value = value.replace(/\//gm,"");
       value = value.toLowerCase();
+      if(value.indexOf('total')>0)
       value = value.replace(/[^total]\w+/g,"");
+      console.log('val',value);
       if(operations[value]) {
         operations[value](commit);
       }
