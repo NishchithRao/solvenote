@@ -12,9 +12,14 @@ export default new Vuex.Store({
     screenValue:"",
     total:0,
     previous: [],
+    variables:{}
   },
   mutations: {
     addProblem(state,value) {
+      if(value.indexOf('=')<0) {
+      Object.keys(state.variables).map(variable => value=value.replaceAll(variable,state.variables[variable]));
+      }
+      console.log(value);
       state.problem = extractText(value);
     },
     solve(state,fun) {
@@ -25,7 +30,7 @@ export default new Vuex.Store({
     },
     addPrevious(state,value) {
       let currentExpresssion = {
-        expression: state.problem,
+        expression: state.screenValue,
         value: state.total
       }
       if(!value)
@@ -47,7 +52,18 @@ export default new Vuex.Store({
     solve({commit}) {
       commit('solve',solveExpression);
     },
-    setScreenValue({commit},value) {
+    setScreenValue({commit,state},value) {
+      let varIndex = [];
+      let match=[];
+      let reg=/=/gm;
+      while((match=reg.exec(value))!==null) {
+        varIndex.push(match.index);
+      }
+      varIndex.map(index => {
+        let variable = value.substr(0,index);
+        let val = parseFloat(value.substr(index+1,value.length-1));
+        state.variables[variable] = val
+      });
       commit('setScreenValue',value);
       commit('addProblem',value);
       commit('solve',solveExpression);
@@ -56,7 +72,6 @@ export default new Vuex.Store({
       value = value.replace(/\//gm,"");
       value = value.toLowerCase();
       value = value.replace(/[^total]\w+/g,"");
-      console.log(value);
       if(operations[value]) {
         operations[value](commit);
       }

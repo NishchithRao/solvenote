@@ -1,6 +1,7 @@
 let resultStack = [];
 let numStack = [];
 let operatorStack = [];
+// let variables = {};
 let precedance = {
   "+": 2,
   "-": 2,
@@ -47,7 +48,6 @@ const processString = value => {
 export const solveExpression = (value) => {
   value=processString(value);
   value = value.replaceAll(/\s+/gm, "#");
-  console.log(value);
   convertRPN(value);
   return solve();
 };
