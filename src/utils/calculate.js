@@ -1,74 +1,143 @@
-const split = (expression,operator) => {
-  let chunk="";
-  let braceCount = 0;
-  let result = [];
-  if(expression) {
-  for(let i=0;i<expression.length;++i) {
-    let str = expression[i];
-    if(str=='(') {
-      braceCount++;
-    }
-    else if(str==')') {
-      braceCount--;
-    }
-    if(braceCount==0 && operator==str) {
-      result.push(chunk);
-      chunk="";
-    } else chunk +=str;
-  }
-}
-  if(chunk) {
-    result.push(chunk);
-  }
-  return result;
-}
+let resultStack = [];
+let numStack = [];
+let operatorStack = [];
+let precedance = {
+  "+": 2,
+  "-": 2,
+  "*": 3,
+  "^": 4,
+  "/": 3,
+};
+let operators = {
+  "+": function(a, b) {
+    let subTotal = a + b;
+    return subTotal;
+  },
+  "-": function(a, b) {
+    let subTotal = a - b;
+    return subTotal;
+  },
+  "*": function(a, b) {
+    let subTotal = a * b;
+    return subTotal;
+  },
+  "/": function(a, b) {
+    let subTotal = a / b;
+    return subTotal;
+  },
+  "^": function(a, b) {
+    let subTotal = Math.pow(a, b);
+    return subTotal;
+  },
+  "%": function(a, b) {
+    let subTotal = (a * b) / 100;
+    return subTotal;
+  },
+};
 
-export const getMultiplicationExpression = value => {
-  let stringValue = split(value,"*");
-  let numbers = stringValue.map(str => getSubtractionExpression(str));
-  let initial=1;
-  let result = numbers.reduce((acc,current) => acc*current,initial);
-  return result;
+const processString = value => {
+  value = value.replaceAll(/[a-z=]/gmi,"");
+  value =" ( " + value;
+  value = value+" )";
+  value =value.replaceAll(/(?<=\d)(?=[^\d\s])|(?<=[^\d\s])(?=\d)/gm," ");
+  value = value.replaceAll('(',' ( ');
+  value = value.replaceAll(')',' ) ');
+  return value;
 }
-
-export const getDivisionExpression = value => {
-  let stringValue = split(value,"/");
-  let numbers = stringValue.map(str => {
-      if(str[0]=='(') {
-        if(str[1] && str[1].match(/[-+]/gm)&&!isNaN(parseInt(str[0]))) {
-          str=str.split('');
-          str.splice(1,0,'0');
-          str = str.join('');
+export const solveExpression = (value) => {
+  value=processString(value);
+  value = value.replaceAll(/\s+/gm, "#");
+  console.log(value);
+  convertRPN(value);
+  return solve();
+};
+const convertRPN = (value) => {
+  let regular = value.split("#");
+  numStack = [];
+  operatorStack = [];
+  for (let i = 0; i < regular.length; i++) {
+    if (checkNum(regular[i])) {
+      numStack.push(regular[i]);
+    } else if (Object.keys(operators).includes(regular[i])) {
+      if(operatorStack[i]=="") {
+        operatorStack.pop();
+      }
+      if (operatorStack.length) {
+        if (precedance[operatorStack[0]] == precedance[regular[i]]) {
+          if(operatorStack[0]==regular[i]) {
+            operatorStack.unshift(regular[i]);
+          }
+          else {
+          checkEqualPrecendence(i, regular);
+          }
+        } else if (precedance[operatorStack[0]] > precedance[regular[i]]) {
+          operatorStack.splice(1, 0, regular[i]);
+        } else if (precedance[operatorStack[0]] < precedance[regular[i]]) {
+          operatorStack.unshift(regular[i]);
+        } else {
+          if (operatorStack[0] == "(") {
+            operatorStack.unshift(regular[i]);
+          } else {
+            operatorStack.push(regular[i]);
+          }
         }
-        const expr = str.substr(1,str.length-1);
-        return getAdditionExpression(expr);
+      } else {
+        operatorStack.shift(regular[i]);
       }
-      if(str.match(/\./g)) {
-        str = parseFloat(str);
-        console.log('string',str);
+    }
+    else if (regular[i] == "(") {
+      operatorStack.unshift(regular[i]);
+    }
+    else if (regular[i] == ")") {
+      let j=operatorStack.indexOf('(');
+      for(let r=0; r<j; r++) {
+        numStack.push(operatorStack.shift());
       }
-      else str=parseInt(str)
-      return str;
-  });
-  let initial=numbers[0];
-  let result = numbers.slice(1).reduce((acc,current) => acc/current,initial);
-  return result;
-}
-export const getAdditionExpression = value => {
-  value=value.replaceAll(/[a-zA-Z]+/gm,"");
-  value = value.replaceAll(/=/gm,"");
-  value=value.replaceAll(/\s+/gm,"");
-  let stringValue = split(value,"+");
-  let numbers = stringValue.map(str => getMultiplicationExpression(str));
-  let initial=0;
-  let result = numbers.reduce((acc,current) => acc + current,initial);
-  return result;
-}
+      operatorStack.shift();
+    } else {
+      operatorStack.push(regular[i]);
+    }
+  }
+  operatorStack.map((op,index) => op==""&&operatorStack.splice(index,1));
+  numStack = numStack.concat(operatorStack);
+};
 
-export const getSubtractionExpression = value => {
-  let stringValue = split(value,"-");
-  let numbers = stringValue.map(str => getDivisionExpression(str));
-  let initial=numbers[0];
-  let result = numbers.slice(1).reduce((acc,current) => acc - current,initial);
-  return result;
-}
+const checkNum = (str) => {
+  return !isNaN(parseFloat(str));
+};
+
+const solve = () => {
+  resultStack = [];
+  for (let i = 0; i < numStack.length; i++) {
+    if (checkNum(numStack[i]) && isFinite(numStack[i])) {
+      resultStack.unshift(parseFloat(numStack[i]));
+    }
+    if (Object.keys(operators).includes(numStack[i])) {
+      console.log('pre',resultStack);
+      let b = resultStack.shift();
+      let a = resultStack.shift();
+      resultStack.unshift(operators[numStack[i]](a, b));
+    }
+  }
+  return resultStack.pop();
+};
+
+const checkEqualPrecendence = (i, regular) => {
+  numStack.push(operatorStack.shift());
+    if (precedance[operatorStack[0]] > precedance[regular[i]]) {
+      operatorStack.splice(1, 0, regular[i]);
+      return;
+    }
+    if (precedance[operatorStack[0]] < precedance[regular[i]]) {
+      operatorStack.unshift(regular[i]);
+      return;
+    }
+    if (precedance[operatorStack[0]] == precedance[regular[i]]) {
+      if(operatorStack[0]==regular[i]) {
+        operatorStack.pop();
+      }
+      else {
+      checkEqualPrecendence(i, regular);
+      }
+    }
+};

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getAdditionExpression } from '../utils/calculate'
+import { solveExpression } from '../utils/calculate'
 import { operations } from '../utils/constants'
 import { extractText } from '../utils/helpers'
 
@@ -42,15 +42,15 @@ export default new Vuex.Store({
   actions: {
     addProblem({commit},value) {
       commit("addProblem",value);
-      commit('solve',getAdditionExpression);
+      commit('solve',solveExpression);
     },
     solve({commit}) {
-      commit('solve',getAdditionExpression);
+      commit('solve',solveExpression);
     },
     setScreenValue({commit},value) {
       commit('setScreenValue',value);
       commit('addProblem',value);
-      commit('solve',getAdditionExpression);
+      commit('solve',solveExpression);
     },
     addPrevious({commit},value) {
       value = value.replace(/\//gm,"");
@@ -63,7 +63,7 @@ export default new Vuex.Store({
       else {
       commit('addPrevious');
       commit('setScreenValue','');
-      commit('solve',getAdditionExpression);
+      commit('solve',solveExpression);
       }
     },
     setSubTotal({commit}) {
