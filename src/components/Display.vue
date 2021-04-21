@@ -1,19 +1,19 @@
 <template>
   <v-container class="display px-0 py-0 mx-0" width="100%">
     <v-row no-gutters>
-      <v-col cols="8" class="pr-0">
+      <v-col sm="8" cols="12" class="pr-0">
         <div
           spellcheck="false"
           :id="currentId"
-          class="editor text-left px-3 pt-6 text-h5"
+          class="editor text-left px-3 sm-pt-6 pt-2 pb-3 sm-pb-0 text-h5"
           v-html="formatedText"
         ></div
       ></v-col>
-      <v-col cols="4" class="pl-0"
+      <v-col sm="4" cols="12" class="pl-0"
         ><v-card
           max-width="100%"
           flat
-          class="rounded-0 text-h5 grey lighten-3  px-3 pt-6 text-left"
+          class="rounded-0 text-h5 grey lighten-3  px-3 pt-2 sm-pb-0 pb-2 sm-pt-6 text-left"
         >
           <span :class="getValues.expression=='total'||getValues.expression=='Total'&& 'total d-block font-weight-black'" v-if="!(getValues.expression[0]==='#')">{{ formatedTextValue }}</span>
           <span v-else class="grey lighten-3  px-3 pt-2"></span>
@@ -83,5 +83,10 @@ export default {
 }
 .operator {
   color: orchid;
+}
+@media (max-width:480px) {
+  .editor {
+    height: fit-content;
+  }
 }
 </style>

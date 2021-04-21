@@ -7,7 +7,7 @@
     :highlightEnabled="true"
     spellcheck="false"
     @input="detect"
-    class="editor text-left px-3 pt-6 text-h5"
+    class="editor text-left px-3 sm-pt-6 pt-2 pb-3 sm-pb-0 text-h5"
     />
   </v-card>
 </template>
@@ -59,5 +59,10 @@ export default {
   outline: none;
   font-family: 'Poppins',sans-serif;
   border-right: 1px solid #00000060;
+}
+@media (max-width:480px) {
+  .editor {
+    height: fit-content;
+  }
 }
 </style>
