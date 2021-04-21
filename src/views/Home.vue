@@ -6,10 +6,10 @@
       </v-col>
     </v-row>
     <v-row align-content="center" no-gutters>
-      <v-col cols="8">
+      <v-col sm="8" cols="12">
         <problem />
       </v-col>
-      <v-col cols="4">
+      <v-col sm="4" cols="12">
         <solution />
       </v-col>
     </v-row>
