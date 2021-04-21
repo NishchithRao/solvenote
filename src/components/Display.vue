@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {highlightNumbers,highlightHeading} from '../utils/helpers';
+import {highlightNumbers,highlightHeading, highlightOperators} from '../utils/helpers';
 export default {
   name: "Display",
   data() {
@@ -47,6 +47,7 @@ export default {
   methods: {
     format(value) {
       value = highlightHeading(value);
+      value = highlightOperators(value);
       value = highlightNumbers(value);
       return value
     }
@@ -79,5 +80,8 @@ export default {
 }
 .total {
   border-top: 1px solid lightgrey;
+}
+.operator {
+  color: orchid;
 }
 </style>

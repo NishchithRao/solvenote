@@ -8,11 +8,14 @@ export const extractText = (value) => {
 };
 
 export const highlightHeading = (value) => {
-    value = value.replaceAll(/\s+/gm,'spa3');
+    value = value.replaceAll(/\s+/gm,'randomText321');
   value = value.replace(
     /#\w+/iygm,
     (text) => `<span class="heading">${text}</span>`);
-    return value.replaceAll(/spa3/gm,' ');
+    return value.replaceAll(/randomText321/gm,' ');
+};
+export const highlightOperators = (value) => {
+    return value.replace(/[+/\-*%]+/gm,num => `<span class="operator">${num}</span>`);
 };
 
 export const processString = value => {

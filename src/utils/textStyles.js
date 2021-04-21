@@ -7,4 +7,7 @@ export const styles = [{
   },{
     text: /\s[a-z]+/iygm,
     style: 'font-weight:bold;'
+  },{
+    text: /[+/\-*%]+/gm,
+    style: 'color:orchid'
   }];
