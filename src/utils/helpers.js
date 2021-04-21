@@ -14,3 +14,11 @@ export const highlightHeading = (value) => {
     (text) => `<span class="heading">${text}</span>`);
     return value.replaceAll(/spa3/gm,' ');
 };
+
+export const processString = value => {
+  value = value.replaceAll(/[a-z=]/gmi,"");
+  value =value.replaceAll(/(?<=\d)(?=[^\d\s])|(?<=[^\d\s])(?=\d)/gm," ");
+  value = value.replaceAll('(',' ( ');
+  value = value.replaceAll(')',' ) ');
+  return value;
+}
