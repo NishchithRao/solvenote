@@ -8,5 +8,10 @@ export const operations = {
         commit('setSubTotal');
         commit('setScreenValue','');
         commit('addPrevious');
+    },
+    save: function(commit,state) {
+        console.log(commit);
+        const date = new Date();
+        localStorage.setItem(`solvenote-${date.toLocaleString(Date.now())}`,state.previous);
     }
 }
