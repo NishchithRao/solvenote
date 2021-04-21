@@ -68,7 +68,7 @@ export default new Vuex.Store({
       commit('addProblem',value);
       commit('solve',solveExpression);
     },
-    addPrevious({commit},value) {
+    addPrevious({commit,state},value) {
       console.log(value.match(/total/));
       value = value.replace(/\//gm,"");
       value = value.toLowerCase();
@@ -76,7 +76,7 @@ export default new Vuex.Store({
       value = value.replace(/[^total]\w+/g,"");
       console.log('val',value);
       if(operations[value]) {
-        operations[value](commit);
+        operations[value](commit,state);
       }
       else {
       commit('addPrevious');
