@@ -11,6 +11,7 @@ let precedance = {
   "*": 3,
   "^": 4,
   "/": 3,
+  "%":3
 };
 
 export const solveExpression = (value) => {
