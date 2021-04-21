@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { solveExpression } from '../utils/calculate'
-import { operations } from '../utils/constants'
+import { operations } from '../utils/methods'
 import { extractText } from '../utils/helpers'
 
 Vue.use(Vuex)
