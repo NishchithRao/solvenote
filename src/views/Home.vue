@@ -18,8 +18,8 @@
 
 <script>
 import Display from "../components/Display.vue";
-import Problem from "../components/Problem.vue";
-import Solution from "../components/Solution.vue";
+import Problem from "../components/main/Problem.vue";
+import Solution from "../components/main/Solution.vue";
 // @ is an alias to /src
 
 export default {
