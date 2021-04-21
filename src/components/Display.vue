@@ -15,7 +15,7 @@
           flat
           class="rounded-0 text-h5 grey lighten-3  px-3 pt-6 text-left"
         >
-          <span v-if="!(getValues.expression[0]==='#')">{{ getValues.value }}</span>
+          <span :class="getValues.expression=='total'||getValues.expression=='Total'&& 'total d-block font-weight-black'" v-if="!(getValues.expression[0]==='#')">{{ formatedTextValue }}</span>
           <span v-else class="grey lighten-3  px-3 pt-2"></span>
         </v-card></v-col
       >
@@ -27,10 +27,22 @@
 import {highlightNumbers,highlightHeading} from '../utils/helpers';
 export default {
   name: "Display",
+  data() {
+    return {
+      numFormat: new Intl.NumberFormat('en-IN',{maximumSignificantDigits:3})
+    }
+  },
+  created() {
+    console.log('expr',this.getValues.expression);
+  },
   computed: {
     formatedText() {
       return this.format(this.getValues.expression)
     },
+    formatedTextValue() {
+      console.log('formatedTextValue');
+      return this.numFormat.format(this.getValues.value)
+    }
   },
   methods: {
     format(value) {
@@ -64,5 +76,8 @@ export default {
 .heading {
   font-weight: bold;
   color: black;
+}
+.total {
+  border-top: 1px solid lightgrey;
 }
 </style>
