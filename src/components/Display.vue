@@ -13,44 +13,57 @@
         ><v-card
           max-width="100%"
           flat
-          class="rounded-0 text-h5 grey lighten-3  px-3 pt-2 sm-pb-0 pb-2 sm-pt-6 text-left"
+          height="100%"
+          class="text-h5 grey lighten-3  px-3 pt-2 sm-pb-0 pb-2 sm-pt-6 text-left"
         >
-          <span :class="getValues.expression=='total'||getValues.expression=='Total'&& 'total d-block font-weight-black'" v-if="!(getValues.expression[0]==='#')">{{ formatedTextValue }}</span>
-          <span v-else class="grey lighten-3  px-3 pt-2"></span>
-        </v-card></v-col
-      >
+          <span
+            :class="
+              (getValues.expression == 'total' ||
+                getValues.expression == 'Total') &&
+                  'total d-block font-weight-black'
+            "
+            v-if="!(getValues.expression[0] === '#')"
+            >{{ formatedTextValue }}</span
+          >
+          <span v-else class="grey lighten-3  px-3 pt-2"></span> </v-card
+      ></v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import {highlightNumbers,highlightHeading, highlightOperators} from '../utils/helpers';
+import {
+  highlightNumbers,
+  highlightHeading,
+  changeOperators,
+} from "../utils/helpers";
 export default {
   name: "Display",
   data() {
     return {
-      numFormat: new Intl.NumberFormat('en-IN',{maximumSignificantDigits:3})
-    }
+      numFormat: new Intl.NumberFormat("en-IN", {
+        maximumSignificantDigits: 3,
+      }),
+    };
   },
   created() {
-    console.log('expr',this.getValues.expression);
+    console.log("expr", this.getValues.expression=='total');
   },
   computed: {
     formatedText() {
-      return this.format(this.getValues.expression)
+      return this.format(this.getValues.expression);
     },
     formatedTextValue() {
-      console.log('formatedTextValue');
-      return this.numFormat.format(this.getValues.value)
-    }
+      return this.numFormat.format(this.getValues.value);
+    },
   },
   methods: {
     format(value) {
       value = highlightHeading(value);
-      value = highlightOperators(value);
+      value = changeOperators(value);
       value = highlightNumbers(value);
-      return value
-    }
+      return value;
+    },
   },
   props: {
     getValues: {
@@ -84,7 +97,7 @@ export default {
 .operator {
   color: orchid;
 }
-@media (max-width:480px) {
+@media (max-width: 480px) {
   .editor {
     height: fit-content;
   }
