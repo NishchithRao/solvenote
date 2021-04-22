@@ -22,19 +22,14 @@ export const solveExpression = (value) => {
 };
 const convertRPN = (value) => {
   let regular = value.split("#");
-  console.log(regular);
   numStack = [];
   operatorStack = [];
   for (let i = 0; i < regular.length; i++) {
-    console.log('check',checkNum(regular[i]),regular[i],regular,i);
     if (checkNum(regular[i])) {
-      console.log('y');
       numStack.push(regular[i]);
     } else if (Object.keys(operators).includes(regular[i])) {
-      console.log('RR',regular[i]);
       if (operatorStack.length) {
         if (precedance[operatorStack[0]] == precedance[regular[i]]) {
-          console.log('op',operatorStack[0],regular[i]);
           if(operatorStack[0]==regular[i]) {
             operatorStack.unshift(regular[i]);
           }
@@ -72,10 +67,7 @@ const convertRPN = (value) => {
   numStack = numStack.concat(operatorStack);
 };
 
-const checkNum = (str) => {
-  console.log('string',str);
-  return !isNaN(parseFloat(str));
-};
+const checkNum = (str) => !isNaN(parseFloat(str));
 
 const solve = () => {
   resultStack = [];
@@ -94,14 +86,12 @@ const solve = () => {
 
 const checkEqualPrecendence = (i, regular) => {
   numStack.push(operatorStack.shift());
-  console.log('prec',operatorStack.length);
   if(operatorStack.length) {
     if (precedance[operatorStack[0]] > precedance[regular[i]]) {
       operatorStack.splice(1, 0, regular[i]);
       return;
     }
     if (precedance[operatorStack[0]] < precedance[regular[i]]) {
-      console.log('RTY',regular[i]);
       operatorStack.unshift(regular[i]);
       return;
     }
