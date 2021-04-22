@@ -14,6 +14,7 @@
 
 <script>
 import HighlightableInput from "vue-highlightable-input"
+import { typographicMathSymbols } from '../../utils/methods';
 import {styles} from '../../utils/textStyles';
 
 export default {
@@ -33,7 +34,7 @@ export default {
       this.$store.dispatch('setScreenValue',value);
     },
     get() {
-      return this.$store.getters.getScreenValue
+      return this.replacedOperators(this.$store.getters.getScreenValue)
     }
     }
   },
@@ -41,12 +42,24 @@ export default {
     detect() {
       this.timer = setTimeout(() => this.$store.dispatch('setScreenValue',this.ScreenValue),1000);
     },
+    replacedOperators(val) {
+      console.log('val',val);
+      if(val)
+      Object.keys(typographicMathSymbols).map(item => val=val.replaceAll(item,typographicMathSymbols[item]));
+      return val;
+    },
     handleKeyboard(e) {
       clearTimeout(this.timer);
       if(e.key=="Enter") {
+        console.log('y');
         e.preventDefault();
         this.$store.dispatch('addPrevious',this.ScreenValue);
         }
+      if(e.key=='Backspace') {
+        if(!this.ScreenValue) {
+          this.$store.dispatch('removePreviousValue');
+        }
+      }
     }
   },
 };
