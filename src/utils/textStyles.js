@@ -8,6 +8,21 @@ export const styles = [{
     text: /\s[a-z]+/iygm,
     style: 'font-weight:bold;'
   },{
-    text: /[+/\-*%]+/gm,
+    text: "\u00d7",
+    style: 'color:orchid'
+  },{
+    text: "\u002b",
+    style: 'color:orchid'
+  },{
+    text: "\u2212",
+    style: 'color:orchid'
+  },{
+    text: "\u00f7",
+    style: 'color:orchid'
+  },{
+    text: "per",
+    style: 'color:orchid'
+  },{
+    text: "among",
     style: 'color:orchid'
   }];

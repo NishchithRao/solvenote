@@ -10,10 +10,16 @@ export const operations = {
         commit('addPrevious');
     },
     save: function(commit,state) {
-        console.log(commit);
         const date = new Date();
         localStorage.setItem(`solvenote-${date.toLocaleString(Date.now())}`,state.previous);
     }
+}
+
+export const typographicMathSymbols = {
+  '*': '\u00d7',
+  '+': '\u002b',
+  '-': '\u2212',
+  '/': '\u00f7',
 }
 export const operators = {
   "+": function(a, b) {
