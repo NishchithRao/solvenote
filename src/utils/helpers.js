@@ -20,7 +20,7 @@ export const highlightOperators = (value) => {
 
 export const processString = value => {
   value = value.replaceAll(/[a-z=]/gmi,"");
-  value =value.replaceAll(/(?<=\d(.)\d)(?=[^\d(.)\d\s])|(?<=[^\d(.)\d\s])(?=\d)/gm," ");
+  value =value.replaceAll(/(?<=(\d(.)\d)|\d)(?=[^\d(.)\d\s])|(?<=[^\d(.)\d\s])(?=\d)/gm," ");
   value = value.replaceAll('(',' ( ');
   value = value.replaceAll(')',' ) ');
   return value;
