@@ -25,4 +25,19 @@ export const styles = [{
   },{
     text: "among",
     style: 'color:orchid'
+  },{
+    text: "total",
+    style: 'color:grey'
+  },{
+    text: "darkmode",
+    style: 'color:grey'
+  },{
+    text: "lightmode",
+    style: 'color:grey'
+  },{
+    text: "clear",
+    style: 'color:grey'
+  },{
+    text: "save",
+    style: 'color:grey'
   }];

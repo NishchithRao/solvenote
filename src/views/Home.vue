@@ -1,5 +1,5 @@
 <template>
-  <v-container class="home px-0 py-0" fluid>
+  <v-container class="primaryBg home px-0 py-0" fluid>
     <v-row align-content-lg="center" no-gutters>
       <v-col cols="12" v-for="(item, index) in display" :key="index">
         <display :currentId="index" :getValues="item" />

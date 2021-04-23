@@ -43,7 +43,7 @@ export const operators = {
     return subTotal;
   },
   "%": function(a, b) {
-    let subTotal = (a / b) * 100;
+    let subTotal = (a / 100) * b;
     return subTotal;
   },
 };

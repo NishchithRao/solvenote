@@ -5,7 +5,7 @@
         <div
           spellcheck="false"
           :id="currentId"
-          class="editor text-left px-3 sm-pt-6 pt-2 pb-3 sm-pb-0 text-h5"
+          class="editor secondaryBg black--text text-left px-3 sm-pt-6 pt-2 pb-3 sm-pb-0 text-h5"
           v-html="formatedText"
         ></div
       ></v-col>
@@ -14,7 +14,7 @@
           max-width="100%"
           flat
           height="100%"
-          class="text-h5 grey lighten-3  px-3 pt-2 sm-pb-0 pb-2 sm-pt-6 text-left"
+          class="rounded-0 text-h5 grey lighten-3  px-3 pt-2 sm-pb-0 pb-2 sm-pt-6 text-left"
         >
           <span
             :class="

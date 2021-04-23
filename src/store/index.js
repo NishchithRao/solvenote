@@ -13,6 +13,7 @@ export default new Vuex.Store({
     total: 0,
     previous: [],
     variables: {},
+    darkmode: false,
   },
   mutations: {
     addProblem(state, value) {
@@ -43,6 +44,13 @@ export default new Vuex.Store({
       state.previous.map((el) => (total += el.value));
       state.total = total;
     },
+    toggleDarkMode(state,value) {
+      console.log('dark',value);
+      state.darkmode = value;
+      state.screenValue='';
+      state.problem='';
+      state.previous.pop();
+    }
   },
   actions: {
     addProblem({ commit }, value) {
@@ -83,6 +91,10 @@ export default new Vuex.Store({
     setSubTotal({ commit }) {
       commit("setSubTotal");
     },
+    toggleDarkMode({commit},value) {
+      console.log('yy');
+      commit('toggleDarkMode',value);
+    },
     removePreviousValue({commit,state}) {
       state.screenValue=state.previous[state.previous.length-1];
       console.log(state.previous);
@@ -106,5 +118,8 @@ export default new Vuex.Store({
     getProblem(state) {
       return state.problem;
     },
+    toggleDarkMode(state) {
+      return state.darkmode;
+    }
   },
 });
