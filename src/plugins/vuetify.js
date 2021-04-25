@@ -7,7 +7,7 @@ export default new Vuetify({
   theme: { dark: false,
 themes: {
     light: {
-        heading: '#000'
+        heading: '#fff'
     },
     dark: {
         grey:'#121212',
